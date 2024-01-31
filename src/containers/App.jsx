@@ -1,44 +1,40 @@
 import React from 'react'
+import Auth from '../components/Auth'
+import { auth } from '../firebaseConfig.js'
+import { useState, useRef } from 'react'
+import Cookies from 'universal-cookie'
+import Chat from '../components/Chat.jsx'
+import FormChat from '../components/FormChat.jsx'
 
-import { initializeApp } from "firebase/app";
-import 'firebase/firestore';
-import 'firebase/auth';
-
-import { useAuthState } from 'react-firebase-hooks/auth'
-
-
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_API_KEY,
-  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_APP_ID,
-  measurementId: import.meta.env.VITE_MEASUREMENT_ID
-};
-
-console.log(firebaseConfig)
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-
-
+const cookies = new Cookies()
 
 function App() {
 
+  const [isAuth, setIsAuth] = useState(cookies.get('auth-token'))
+  const [room, setRoom] = useState(null)
+
+  const roomInputRef = useRef(null)
+
+  const updateRoom = (update) => {
+    setRoom(update)
+  }
+
+
+  if (!isAuth) {
+    return (
+      <div>
+        <Auth setIsAuth={setIsAuth} />
+      </div>
+    )
+  }
 
   return (
-    <>
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-    {/* header 
-    chat area 
-    text send area
-    footer  */}
-    </>
+    <div> 
+      {room ? <Chat room={room} /> : <FormChat roomInputRef={roomInputRef} setRoom={setRoom} />}
+    </div>
   )
 }
 
 export default App
+
+
