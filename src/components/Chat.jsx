@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { addDoc, collection, onSnapshot, serverTimestamp, query, where } from 'firebase/firestore'
+import { addDoc, collection, onSnapshot, serverTimestamp, query, where, orderBy } from 'firebase/firestore'
 import { useEffect } from 'react'
 import { auth, db } from '../firebaseConfig.js'
 
@@ -31,7 +31,7 @@ const Chat = ({ room }) => {
   useEffect(() => {
 
     //create the query
-    const queryMessages = query(messageRef, where("room", "==", room))
+    const queryMessages = query(messageRef, where("room", "==", room), orderBy("createdAt"))
 
     // extract the messages from the query
     const unsuscribe = onSnapshot(queryMessages, (snapshot) => {

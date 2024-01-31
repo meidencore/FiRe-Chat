@@ -1,8 +1,11 @@
 import React from 'react'
-import Auth from '../components/Auth'
-import { auth } from '../firebaseConfig.js'
 import { useState, useRef } from 'react'
+
+import { auth } from '../firebaseConfig.js'
+import { signOut } from 'firebase/auth'
 import Cookies from 'universal-cookie'
+
+import Auth from '../components/Auth.jsx'
 import Chat from '../components/Chat.jsx'
 import FormChat from '../components/FormChat.jsx'
 
@@ -15,8 +18,11 @@ function App() {
 
   const roomInputRef = useRef(null)
 
-  const updateRoom = (update) => {
-    setRoom(update)
+  const handleSignOut = async () => {
+    await signOut(auth)
+    cookies.remove('auth-token')
+    setIsAuth(false)
+    setRoom(null)
   }
 
 
@@ -30,6 +36,9 @@ function App() {
 
   return (
     <div> 
+      <header>
+        <button onClick={handleSignOut}>SignOut</button>
+      </header>
       {room ? <Chat room={room} /> : <FormChat roomInputRef={roomInputRef} setRoom={setRoom} />}
     </div>
   )
