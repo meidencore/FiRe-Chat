@@ -3,12 +3,11 @@ import { useState } from 'react'
 import { addDoc, collection, onSnapshot, serverTimestamp, query, where, orderBy } from 'firebase/firestore'
 import { useEffect } from 'react'
 import { auth, db } from '../firebaseConfig.js'
+import Send from '../assets/send.svg'
 
 const Chat = ({ room }) => {
 
-  const [newMessage, setNewMessage] = useState("")
-  const [messages, setMessages] = useState([])
-
+  
   const messageRef = collection(db, 'messages')
 
   const handleSubmit = async (event) => {
@@ -59,7 +58,7 @@ const Chat = ({ room }) => {
         onChange={(event) => setNewMessage(event.target.value)}
         value={newMessage}
         />
-        <button type='submit' >Send</button>
+        <button type='submit' ><img src={Send} alt='send'/></button>
       </form>
     </section>
   )

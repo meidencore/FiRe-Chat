@@ -1,46 +1,37 @@
 import React from 'react'
 import { useState, useRef } from 'react'
-
-import { auth } from '../firebaseConfig.js'
-import { signOut } from 'firebase/auth'
 import Cookies from 'universal-cookie'
+import { Auth , Header, Homepage, ChatRoom } from '../components'
 
-import Auth from '../components/Auth.jsx'
-import Chat from '../components/Chat.jsx'
-import FormChat from '../components/FormChat.jsx'
 
 const cookies = new Cookies()
 
 function App() {
 
-  const [isAuth, setIsAuth] = useState(cookies.get('auth-token'))
-  const [room, setRoom] = useState(null)
+  const [ showId, setShowId ] = useState(false)
+  const [ isAuth, setIsAuth ] = useState(cookies.get('auth-token'))
+  const [ room, setRoom ] = useState(null)
+  const [ path, setPath ] = useState('Homepage')
 
   const roomInputRef = useRef(null)
 
-  const handleSignOut = async () => {
-    await signOut(auth)
-    cookies.remove('auth-token')
-    setIsAuth(false)
-    setRoom(null)
-  }
-
-
   if (!isAuth) {
     return (
-      <div>
-        <Auth setIsAuth={setIsAuth} />
+      <div className="flex items-center justify-center w-screen h-screen bg-gray-100 text-gray-800">
+        <Auth setIsAuth={setIsAuth}/>
       </div>
     )
   }
 
   return (
-    <div> 
-      <header>
-        <button onClick={handleSignOut}>SignOut</button>
-      </header>
-      {room ? <Chat room={room} /> : <FormChat roomInputRef={roomInputRef} setRoom={setRoom} />}
-    </div>
+      <div className="flex flex-col items-center justify-center w-screen h-screen bg-gray-100 text-gray-800">
+        <Header room={room} setRoom={setRoom} path={path} setPath={setPath} setIsAuth={setIsAuth} showId={showId} setShowId={setShowId}/>
+        {room ? 
+        <ChatRoom room={room}/> 
+        : 
+        <Homepage roomInputRef={roomInputRef} room={room} setRoom={setRoom} setPath={setPath} path={path} showId={showId}/>
+        }
+      </div>
   )
 }
 
