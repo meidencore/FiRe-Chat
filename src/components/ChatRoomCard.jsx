@@ -17,7 +17,7 @@ const ChatRoomCard = ({id, name, description, users, setRoom, setPath, showId, c
     }
 
     return (
-        <li key={id} className='flex' onClick={handleClick}>
+        <li className='flex' onClick={handleClick}>
             <div className="hover:bg-blue-600 hover:ring-blue-600 hover:shadow-md group rounded-md p-3 bg-white ring-1 ring-slate-200 shadow-sm w-full">
                 <dl className="grid sm:block lg:grid xl:block grid-cols-2 grid-rows-2 items-center">
                     <div>

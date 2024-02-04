@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { getMessages, postMessages } from "../services/handleChatRooms"
 import { cookies } from "../services/handleAuth"
 
@@ -8,6 +8,7 @@ const ChatRoom = ({room}) => {
 
   const [newMessage, setNewMessage] = useState("")
   const [messages, setMessages] = useState([])
+  const autoScroll = useRef()
 
   const handleSubmit = async (event) => {
 	event.preventDefault()
@@ -17,26 +18,24 @@ const ChatRoom = ({room}) => {
 	// clean the input field
 
     response ? setNewMessage("") : alert('error sending your message\ncheck your network connection')
+	autoScroll.current.scrollIntoView({behavior: 'smooth'})
   }
 
-  
-
   useEffect(() => {
-    getMessages(room, setMessages)
       // update the state with the messages grabed from the DB
-    // clean the useEffect
+    getMessages(room, setMessages)
   },[])
 
   return (
 	<div className="flex flex-col flex-grow w-full max-w-xl bg-white shadow-xl rounded-b-xl overflow-y-auto">
 		<div className="flex flex-col flex-grow h-0 p-4 overflow-auto">
-			{messages.map(({text, author, createdAt}) => {
+			{messages.map(({id, text, author, createdAt}) => {
 				if (author === authUser) {
 				return (
-					<div className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
+					<div key={id} className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
 						<div>
 							<div className="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg">
-								<p className="text-sm break-all">{text}</p>
+								<p className="text-sm break-words">{text}</p>
 							</div>
 							<span className="text-xs text-gray-500 leading-none">3:00pm</span>
 						</div>
@@ -45,11 +44,11 @@ const ChatRoom = ({room}) => {
 				)
 				} else {
 					return (
-						<div className="flex w-full mt-2 space-x-3 max-w-xs">
+						<div key={id} className="flex w-full mt-2 space-x-3 max-w-xs">
 							<img className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300" src={`https://unavatar.io/${author}`} alt="avatar" />
 							<div>
 								<div className="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg">
-									<p className="text-sm break-all">{text}</p>
+									<p className="text-sm break-words">{text}</p>
 								</div>
 								<span className="text-xs text-gray-500 leading-none">3:00pm</span>
 							</div>
@@ -58,7 +57,9 @@ const ChatRoom = ({room}) => {
 				}}
 				)
 			}
+			<div ref={autoScroll}/>
 		</div>
+
 		
 		<div className="bg-gray-300 p-2 flex">
 			<input 

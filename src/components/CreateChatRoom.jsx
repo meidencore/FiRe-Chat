@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { createChatRoom } from '../services/handleChatRooms'
+import { getLocalStorage, setLocalStorage } from '../services/localStorage'
 
 const CreateChatRoom = ({ setChatRooms, setPath }) => {
 
@@ -10,8 +11,11 @@ const CreateChatRoom = ({ setChatRooms, setPath }) => {
     // the response is the new chatRoom
     const response = await createChatRoom(nameInputRef.current.value, descInputRef.current.value )
     const { id } = response
-    console.log(response)
+    // update the state and the localStorage (I know that I need a customHook for this)
     setChatRooms((prev) => [...prev, response])
+    const localChatRooms = getLocalStorage('chatrooms')
+    setLocalStorage([...localChatRooms, response])
+
     alert(`Chatroom: ${nameInputRef.current.value} succefully created\n Your Room ID is: ${id}\n Share it with your friends`)
     setPath('Homepage')
   }

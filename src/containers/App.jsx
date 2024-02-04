@@ -3,7 +3,6 @@ import { useState, useRef } from 'react'
 import Cookies from 'universal-cookie'
 import { Auth , Header, Homepage, ChatRoom } from '../components'
 
-
 const cookies = new Cookies()
 
 function App() {
