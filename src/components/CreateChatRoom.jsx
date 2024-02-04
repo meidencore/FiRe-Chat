@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { createChatRoom } from '../services/handleChatRooms'
 import { getLocalStorage, setLocalStorage } from '../services/localStorage'
+import './popup.css'
 
 const CreateChatRoom = ({ setChatRooms, setPath }) => {
 
@@ -21,7 +22,8 @@ const CreateChatRoom = ({ setChatRooms, setPath }) => {
   }
   
   return (
-    <div className="flex flex-col items-center rounded-md p-3 bg-white ring-1 ring-slate-200 shadow-sm w-full ">
+    <div className='popup'>
+    <div className="inner-poppup flex flex-col items-center rounded-md p-3 bg-white ring-1 ring-slate-200 shadow-sm w-full ">
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm flex-col content-center">        
           <div className="m-4 p-4 flex flex-col items-start justify-center">
               <label htmlFor="chatroom" className="items-center justify-center text-sm font-medium leading-6 text-gray-900">
@@ -50,6 +52,7 @@ const CreateChatRoom = ({ setChatRooms, setPath }) => {
               Create Chatroom
           </button>
         </div>
+    </div>
     </div>
   )
 }

@@ -12,6 +12,7 @@ const Homepage = ({ room, setRoom, setPath, path, roomInputRef, showId}) => {
   useEffect(() => {
     async function  queryServer  () {
       const result = await getChatRoom()
+      if (result === null) return
       if (result.length !== getLocalStorage('chatrooms').length) {
         setChatRooms(result)
         setLocalStorage(result)
@@ -33,7 +34,7 @@ const Homepage = ({ room, setRoom, setPath, path, roomInputRef, showId}) => {
         <>
         <Search path={path} setPath={setPath}/>
         <ul className="bg-slate-50 p-4 sm:px-8 sm:pt-6 sm:pb-8 lg:p-4 xl:px-8 xl:pt-6 xl:pb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4 text-sm leading-6 overflow-y-auto">
-          {chatRooms.length !== 0 ? chatRooms.map(({ id ,name, description, users}) => {
+          {chatRooms ? chatRooms.map(({ id ,name, description, users}) => {
             return(
               <ChatRoomCard 
                 key={id}

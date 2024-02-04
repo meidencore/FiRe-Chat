@@ -1,8 +1,11 @@
 import { useState, useEffect, useRef } from "react"
 import { getMessages, postMessages } from "../services/handleChatRooms"
 import { cookies } from "../services/handleAuth"
+import { useCallback } from "react"
 
 const authUser = cookies.get('displayName')
+
+// ToDo : read the server timeStamp and convert to a usable date format
 
 const ChatRoom = ({room}) => {
 
@@ -18,18 +21,20 @@ const ChatRoom = ({room}) => {
 	// clean the input field
 
     response ? setNewMessage("") : alert('error sending your message\ncheck your network connection')
-	autoScroll.current.scrollIntoView({behavior: 'smooth'})
   }
-
   useEffect(() => {
       // update the state with the messages grabed from the DB
     getMessages(room, setMessages)
   },[])
 
+  //autoscroll to the last message
+  useEffect(()=> {autoScroll.current.scrollIntoView({behavior: 'smooth'})},[messages])
+
   return (
 	<div className="flex flex-col flex-grow w-full max-w-xl bg-white shadow-xl rounded-b-xl overflow-y-auto">
 		<div className="flex flex-col flex-grow h-0 p-4 overflow-auto">
 			{messages.map(({id, text, author, createdAt}) => {
+					const time = createdAt ? createdAt.toDate().toLocaleTimeString('en-us', {timeStyle: 'short'}) : ''
 				if (author === authUser) {
 				return (
 					<div key={id} className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
@@ -37,7 +42,7 @@ const ChatRoom = ({room}) => {
 							<div className="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg">
 								<p className="text-sm break-words">{text}</p>
 							</div>
-							<span className="text-xs text-gray-500 leading-none">3:00pm</span>
+							<span className="text-xs text-gray-500 leading-none">{time}</span>
 						</div>
 						<img className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300" src={`https://unavatar.io/${author}`} alt="avatar" />
 					</div>
@@ -50,7 +55,7 @@ const ChatRoom = ({room}) => {
 								<div className="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg">
 									<p className="text-sm break-words">{text}</p>
 								</div>
-								<span className="text-xs text-gray-500 leading-none">3:00pm</span>
+								<span className="text-xs text-gray-500 leading-none">{time}</span>
 							</div>
 						</div>
 					)
