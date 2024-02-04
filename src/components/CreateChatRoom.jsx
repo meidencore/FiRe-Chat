@@ -22,7 +22,6 @@ const CreateChatRoom = ({ setChatRooms, setPath }) => {
   }
   
   return (
-    <div className='popup'>
     <div className="inner-poppup flex flex-col items-center rounded-md p-3 bg-white ring-1 ring-slate-200 shadow-sm w-full ">
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm flex-col content-center">        
           <div className="m-4 p-4 flex flex-col items-start justify-center">
@@ -52,7 +51,6 @@ const CreateChatRoom = ({ setChatRooms, setPath }) => {
               Create Chatroom
           </button>
         </div>
-    </div>
     </div>
   )
 }

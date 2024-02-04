@@ -13,7 +13,7 @@ const Homepage = ({ room, setRoom, setPath, path, roomInputRef, showId}) => {
     async function  queryServer  () {
       const result = await getChatRoom()
       if (result === null) return
-      if (result.length !== getLocalStorage('chatrooms').length) {
+      if (result.length !== getLocalStorage('chatrooms')?.length) {
         setChatRooms(result)
         setLocalStorage(result)
       }
