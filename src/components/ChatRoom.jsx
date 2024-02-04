@@ -59,11 +59,11 @@ const ChatRoom = ({room}) => {
 			}
 			<div ref={autoScroll}/>
 		</div>
-
 		
 		<div className="bg-gray-300 p-2 flex">
 			<input 
 			onChange={(event) => setNewMessage(event.target.value)}
+			onKeyDown={(event) => {if (event.code === "Enter") handleSubmit(event)}}
         	value={newMessage} 
 			placeholder="Write your message!" className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-4 bg-gray-200 rounded-l-md py-3"/>
 
