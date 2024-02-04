@@ -25,24 +25,24 @@ const Header = ({room, setRoom, path, setPath, setIsAuth, showId, setShowId}) =>
 
   return (   
     <div className="flex items-center w-full max-w-xl max-h-[55px] h-full justify-between py-1 border-gray-200 bg-gray-200 shadow-xl rounded-t-xl px-4">
-      <div className="relative flex items-center">
+      <div className=" h-full flex items-center">
         <button onClick={handleClick} type="button" className={`${path !== 'Homepage' ? 'inline-flex' : 'hidden'} items-center justify-center rounded-lg border h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none`}>
           <img src={arrowBack} alt="back"/>
         </button>
         <img src={fireChat} alt='fire chat icon' className='ml-4 h-[32px]'/>
-        <span className='text-xl sm:text-base text-gray-700 font-semibold'>{path}</span>
-        <div className={`${room ? 'flex' : 'hidden'} flex-col flex-nowrap leading-tight overflow-hidden mx-4`}>
-          <div className="text-xl flex items-center sm:text-base">
-              <span className='text-gray-700 mr-3'>Chat Room</span>
+        <span className='sm:text-xl text-base text-gray-700 font-semibold'>{path}</span>
+        <div className={`${room ? 'flex' : 'hidden'} flex-col flex-nowrap leading-tight overflow-hidden sm:mx-4 mx-1`}>
+          <div className="sm:text-xl flex items-center text-base">
+            <span className='text-gray-700 lg:mr-3'>{`${room ? room.name: ''}`}</span>
           </div>
-          <span className="text-md sm:text-sm text-gray-600 w-full overflow-hidden">Participants</span>
+          <span className="sm:text-base text-[0.5rem] text-gray-600 w-full">{`${room ? room.users.join(", "): ''}`}</span>
         </div>
       </div>
       <div className="flex items-center">
       <button onClick={handleShow} className="inline-flex items-center justify-center rounded-lg border h-10 w-full transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
         <img title={showId ? 'Hide Chat Id' : 'Show Chat Id'} className="px-2 cursor-pointer" src={showId ? show : notShow} alt="showid"/>
       </button>
-      <button onClick={handleClick} type="SignOutButton" className="inline-flex items-center justify-center rounded-lg border h-10 w-full transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none ml-4">
+      <button onClick={handleClick} type="SignOutButton" className="inline-flex items-center justify-center rounded-lg border h-10 w-full transition duration-500 ease-in-out text-gray-600 hover:bg-gray-500 focus:outline-none ml-4">
         <span alt='SignOutButton' className='text-semibold px-2'>SignOut</span>
       </button>
       </div>
