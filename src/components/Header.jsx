@@ -30,12 +30,12 @@ const Header = ({room, setRoom, path, setPath, setIsAuth, showId, setShowId}) =>
           <img src={arrowBack} alt="back"/>
         </button>
         <img src={fireChat} alt='fire chat icon' className='ml-4 h-[32px]'/>
-        <span className='text-xl text-gray-700 font-semibold'>{path}</span>
+        <span className='text-xl sm:text-base text-gray-700 font-semibold'>{path}</span>
         <div className={`${room ? 'flex' : 'hidden'} flex-col flex-nowrap leading-tight overflow-hidden mx-4`}>
-          <div className="text-xl flex items-center">
+          <div className="text-xl flex items-center sm:text-base">
               <span className='text-gray-700 mr-3'>Chat Room</span>
           </div>
-          <span className="text-md text-gray-600 w-full overflow-hidden">Participants</span>
+          <span className="text-md sm:text-sm text-gray-600 w-full overflow-hidden">Participants</span>
         </div>
       </div>
       <div className="flex items-center">
