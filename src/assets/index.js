@@ -4,6 +4,8 @@ import google from './google.svg'
 import show from './show.svg'
 import notShow from './notshow.svg'
 import send from './send.svg'
+import plus from './plus.svg'
+import search from './search.svg'
 
 export {
     arrowBack,
@@ -12,4 +14,6 @@ export {
     show,
     notShow,
     send,
+    plus,
+    search
 }

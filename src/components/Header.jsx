@@ -35,7 +35,7 @@ const Header = ({room, setRoom, path, setPath, setIsAuth, showId, setShowId}) =>
           <div className="sm:text-xl flex items-center text-base">
             <span className='text-gray-700 lg:mr-3'>{`${room ? room.name: ''}`}</span>
           </div>
-          <span className="sm:text-base text-[0.5rem] text-gray-600 w-full">{`${room ? room.users.join(", "): ''}`}</span>
+          {/* <span className="sm:text-base text-[0.5rem] text-gray-600 w-full">{`${room ? room.users.join(", "): ''}`}</span> */}
         </div>
       </div>
       <div className="flex items-center">

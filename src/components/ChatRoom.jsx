@@ -1,11 +1,9 @@
 import { useState, useEffect, useRef } from "react"
 import { getMessages, postMessages } from "../services/handleChatRooms"
 import { cookies } from "../services/handleAuth"
-import { useCallback } from "react"
 
 const authUser = cookies.get('displayName')
 
-// ToDo : read the server timeStamp and convert to a usable date format
 
 const ChatRoom = ({room}) => {
 

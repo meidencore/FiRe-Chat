@@ -1,4 +1,3 @@
-import { mockChatRooms, participants } from '../mocks/mocks.js'
 import { useState, useEffect } from 'react'
 import { Search, NewChatRoom, ChatRoomCard, CreateChatRoom } from './'
 import { getChatRoom } from '../services/handleChatRooms.js'
@@ -23,16 +22,26 @@ const Homepage = ({ room, setRoom, setPath, path, roomInputRef, showId}) => {
   },[])
 
   const [ chatRooms, setChatRooms ] = useState(getLocalStorage('chatrooms'))
+  const [ searchId, setSearchId ] = useState(null)
 
   return (
     <>
     <section className='flex flex-col flex-grow w-full max-w-xl bg-white shadow-xl rounded-b-xl overflow-auto'>
         {path === 'Create New Chatroom' ? 
-
         <CreateChatRoom setRoom={setRoom} roomInputRef={roomInputRef} setPath={setPath} setChatRooms={setChatRooms}/>
         :
         <>
         <Search path={path} setPath={setPath}/>
+        {path=== 'Join New Chat' ? 
+        <ul className="bg-slate-50 p-4 sm:px-8 sm:pt-6 sm:pb-8 lg:p-4 xl:px-8 xl:pt-6 xl:pb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4 text-sm leading-6 overflow-y-auto">
+          { searchId ? 
+          <ChatRoomCard />
+        :
+        <></>
+        }
+          
+        </ul>
+        : 
         <ul className="bg-slate-50 p-4 sm:px-8 sm:pt-6 sm:pb-8 lg:p-4 xl:px-8 xl:pt-6 xl:pb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4 text-sm leading-6 overflow-y-auto">
           {chatRooms ? chatRooms.map(({ id ,name, description, users}) => {
             return(
@@ -55,6 +64,7 @@ const Homepage = ({ room, setRoom, setPath, path, roomInputRef, showId}) => {
           }
           {path !== 'Homepage' ? <></> : <NewChatRoom setPath={setPath}/>}
         </ul>
+        }
         </>
         }
     </section>

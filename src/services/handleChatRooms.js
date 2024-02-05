@@ -1,4 +1,4 @@
-import { addDoc, collection, onSnapshot, serverTimestamp, query, where, orderBy, getDocs, getDoc, doc } from 'firebase/firestore'
+import { addDoc, collection, onSnapshot, serverTimestamp, query, where, orderBy, getDocs, getDoc, doc, updateDoc, arrayUnion } from 'firebase/firestore'
 import { auth, db} from '../firebaseConfig.js'
 import { cookies } from './handleAuth.js'
 import { messages } from '../mocks/mocks.js'
@@ -19,7 +19,6 @@ export async function createChatRoom (name, description) {
         const messagesSubCollectionRef =  collection(db, 'chatrooms', response.id, 'messages')
 
         await addDoc(messagesSubCollectionRef, {})
-        // createdAt: serverTimestamp()
 
         // recover from the db the new chatroom that just create
         const chatRoomRef = doc(db, 'chatrooms', response.id );
@@ -58,6 +57,18 @@ export async function getChatRoom () {
         console.log(err)
         return null
     }
+}
+
+export async function updateChatRoomUsers (id) {
+
+    const displayName = cookies.get('displayName')
+    const docRef = doc(db, 'chatrooms', id)
+    //update the document
+    const result = await updateDoc(docRef, {
+        users: arrayUnion(displayName)
+    })
+    console.log(result)
+
 }
 
 export async function postMessages (currentChatRoom, message) {
