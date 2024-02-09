@@ -1,5 +1,6 @@
 import { addDoc, collection, onSnapshot, serverTimestamp, query, where, orderBy, getDocs, getDoc, doc, updateDoc, arrayUnion } from 'firebase/firestore'
-import { auth, db} from '../firebaseConfig.js'
+import { auth, db } from '../firebaseConfig.js'
+import { onAuthStateChanged } from 'firebase/auth'
 import { cookies } from './handleAuth.js'
 import { messages } from '../mocks/mocks.js'
 
@@ -12,8 +13,8 @@ export async function createChatRoom (name, description) {
             name,
             description,
             createdAt: serverTimestamp(), 
-            owner: auth.currentUser.displayName,
-            users: [auth.currentUser.displayName]
+            owner: signInUser.displayName,
+            users: signInUser.uid
         })
 
         const messagesSubCollectionRef =  collection(db, 'chatrooms', response.id, 'messages')
@@ -34,13 +35,13 @@ export async function createChatRoom (name, description) {
 
 }
 
-export async function getChatRoom () {
+export async function getChatRoom (user) {
 
-    const displayName = cookies.get('displayName')
+    const uid = user.uid
     const collectionRef = collection(db, 'chatrooms')
 
     //create the query
-    const queryChatRooms = query(collectionRef, where("users", "array-contains", displayName))
+    const queryChatRooms = query(collectionRef, where("users", "array-contains", uid))
 
     try {
         // get the docs
@@ -60,14 +61,12 @@ export async function getChatRoom () {
 }
 
 export async function updateChatRoomUsers (id) {
-
-    const displayName = cookies.get('displayName')
+   
     const docRef = doc(db, 'chatrooms', id)
     //update the document
-    const result = await updateDoc(docRef, {
-        users: arrayUnion(displayName)
+    await updateDoc(docRef, {
+        users: arrayUnion(signInUser.uid)
     })
-    console.log(result)
 
 }
 

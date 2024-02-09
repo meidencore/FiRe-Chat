@@ -6,6 +6,7 @@ import notShow from './notshow.svg'
 import send from './send.svg'
 import plus from './plus.svg'
 import search from './search.svg'
+import file from './file.svg'
 
 export {
     arrowBack,
@@ -15,5 +16,6 @@ export {
     notShow,
     send,
     plus,
-    search
+    search,
+    file
 }
