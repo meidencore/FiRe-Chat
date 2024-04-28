@@ -7,7 +7,7 @@ const Navbar = () => {
       <div className="flex gap-3">
         <img src={profile} alt="profile" className="bg-_dimSoft h-6 w-6 rounded-full object-cover"/>
         <span className="font-normal text-base cursor-default">Meidencore</span>
-        <button className="bg-_dimDark text-_dimSoft text-xs border-none cursor-pointer p-1">Logout</button>
+        <button className="bg-_dimDark text-_dimSoft text-xs border-none rounded cursor-pointer p-1">Logout</button>
       </div>
     </div>
   )

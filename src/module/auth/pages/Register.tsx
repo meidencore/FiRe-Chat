@@ -13,9 +13,9 @@ const Register = () => {
                 <input className="bg-_dimSoft border-0 px-4 border-b-_dark border-b-[1px] border-solid bg-_gray focus:outline-none focus:ring-0 focus:border-b-_dark" type="email" placeholder='Email'/>
                 <input className="bg-_dimSoft border-0 px-4 border-b-_dark border-b-[1px] border-solid bg-_gray focus:outline-none focus:ring-0 focus:border-b-_dark" type="password" placeholder='Password'/>
                 <input className="hidden" type="file" id='fileInput'/>
-                <label className='flex gap-2 mt-2' htmlFor="fileInput">
-                   <img className="px-2 mr-0" src={file} alt='file'/>
-                   <span>Add an avatar</span>
+                <label className='flex items-center justify-start mt-2 gap-2' htmlFor="fileInput">
+                   <img className="mr-0 min-w-6" src={file} alt='file'/>
+                   <span className='text-_dark font-semibold'>Add an avatar</span>
                 </label>
                 <button className='bg-_yellow text-_aumDark px-2 py-2 font-bold border-none cursor-pointer hover:bg-yellow-500 rounded-md'>
                     Sign Up
