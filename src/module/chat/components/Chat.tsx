@@ -1,4 +1,4 @@
-import { Input, Messages } from "./"
+import { Input, Messages } from "."
 
 const Chat = () => {
     return (

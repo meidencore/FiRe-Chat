@@ -1,4 +1,4 @@
-import { Chats, Navbar, Search } from "./"
+import { Chats, Navbar, Search } from "."
 
 const Sidebar = () => {
   return (

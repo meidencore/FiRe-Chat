@@ -1,4 +1,4 @@
-import { profile } from "../assets"
+import { profile } from "../../../../public/assets"
 
 interface Props {
   owner: boolean
