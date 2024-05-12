@@ -1,6 +1,7 @@
 import { auth } from "../../../services/utils/firebase.config";
 import { onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect } from "react";
+import { registerUser } from "../../../services/auth/register";
 
 export function useAuth () {
 
@@ -16,5 +17,5 @@ export function useAuth () {
         })
     },[])
 
-    return [ user, authState ]
+    return { user, authState, registerUser }
 }
