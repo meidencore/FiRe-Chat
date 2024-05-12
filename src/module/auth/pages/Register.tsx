@@ -1,20 +1,19 @@
+import { ChangeEvent, FormEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { file } from '../../../../public/assets'
-import { ChangeEvent, FormEvent, useState } from 'react'
-import { auth } from '../../../services/utils/firebase.config'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { AuthError } from 'firebase/auth/web-extension'
+import { useAuth } from '../hooks/useAuth'
+import { updateUser } from '../../../services/auth/user'
 
 const Register = () => {
 
   const [error, setError] = useState<string | null>(null)
+  const { registerUser } = useAuth()
   
   const onInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
     const element = event.target as HTMLInputElement
     element.value = ''
   }
-
 
   const handleAvatar = (event: ChangeEvent<HTMLInputElement>) => {
       const element = event.currentTarget
@@ -24,28 +23,29 @@ const Register = () => {
       }
     }
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+
+    // clean the error state
     if (error) setError(null)
+
+    // Get the elements from the Form
     const elements = event.currentTarget
-    // const formData = new FormData(event.currentTarget)
     const username: string = elements.username.value
     const email: string = elements.email.value
     const password:string = elements.email.value
     const file: File = elements.file.files[0]
-    console.log(file)
-    console.log(typeof username)
+
 
     // TODO validate empty string fields
-    createUserWithEmailAndPassword(auth, email , password)
-      .then((userCredential):void => {
-        const user = userCredential.user
-        console.log(user)
-      }).catch((err: AuthError) => {
-        const errorMessage = err.code.slice(5).split('-').join(' ') // slice(5) => remove auth/, then remove the "-"
-        setError(errorMessage)
-      })
+
+    const user = await registerUser({ email, password })
+    updateUser(user, {
+      displayName:username, 
+      photoURL: URL.createObjectURL(file) })
+
   }
+
   return (
     <div className='bg-_aumDark h-screen flex items-center justify-center'>
         <div className={`flex flex-col items-center rounded-[10px] bg-_dimSoft py-5 px-[60px] gap-[10px] ${error? 'border-solid border-2 border-red-700' : null}`}>
