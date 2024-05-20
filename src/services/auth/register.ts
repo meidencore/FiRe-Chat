@@ -1,19 +1,23 @@
-import { createUserWithEmailAndPassword, type User } from 'firebase/auth'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../utils/firebase.config'
+import { AuthCredentials, RegisterFail, RegisterSuccess } from '../../types/auth'
 
-type AuthCredentials = {
-    email: string,
-    password: string,
-}
-
-
-export async function registerUser ({ email, password }: AuthCredentials): Promise<User | any > {
+export async function registerUser ({ email, password }: AuthCredentials): Promise<RegisterSuccess | RegisterFail> {
     
-    try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email , password)
+    try 
+    {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password)
         const { user } = userCredential
-        return user
-    } catch (error: any) {
-        return error
-    }
+        return {
+            _t:"register_success",
+            user
+        }
+    } 
+    catch (error) 
+    {   
+        return {
+            _t: "register_fail",
+            error
+        }
   }
+}
