@@ -1,6 +1,6 @@
 import { User, updateProfile } from "firebase/auth";
 
-type UserUpdates = {
+export type UserUpdates = {
     displayName?: string,
     photoURL?: string,
 }

@@ -1,12 +1,20 @@
 import { auth } from "../../../services/utils/firebase.config";
-import { onAuthStateChanged } from "firebase/auth";
+import { User, onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect } from "react";
-import { registerUser } from "../../../services/auth/register";
 
-export function useAuth () {
+type AuthReturn = {
+    user?: User;
+    authState?: boolean;
+}
 
-    const [user, setUser] = useState<any | null>(null)
-    const [authState, setAuthState ] = useState<any | undefined>(undefined)
+/**
+ * hook for the firebase auth process
+ * @returns {AuthReturn} Firebase User object if exist and a boolean with the auth information, true if are logged in, false for logged out, and undefine where no auth has been performed.
+ */
+export function useAuth (): AuthReturn {
+
+    const [user, setUser] = useState<User>()
+    const [authState, setAuthState ] = useState<boolean>()
 
     useEffect(() => {
         return onAuthStateChanged(auth, (user) => {
@@ -17,5 +25,5 @@ export function useAuth () {
         })
     },[])
 
-    return { user, authState, registerUser }
+    return { user, authState }
 }
