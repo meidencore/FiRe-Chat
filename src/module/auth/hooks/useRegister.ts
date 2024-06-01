@@ -1,6 +1,6 @@
 import { User } from "firebase/auth";
 import { useEffect, useState } from "react";
-import { registerUser } from "../../../services/auth/register";
+import { registerUser } from "../../../services/auth/auth";
 import { createUserInDb, updateUser } from "../../../services/auth/user";
 import { uploadProfilePicture } from "../../../services/auth/image";
 import { RegisterProps, useRegisterReturn, UserUpdates } from "../../../types/auth";
