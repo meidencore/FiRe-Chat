@@ -1,7 +1,7 @@
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../utils/firebase.config";
 import { User } from "firebase/auth";
-import { UploadPictureFail, UploadPictureSuccess } from "../../types/auth";
+import { UploadPictureSuccess, UploadPictureFail } from "../../types/auth";
 
 
 export function uploadProfilePicture ({ uid }: User, file: File): UploadPictureSuccess | UploadPictureFail {
@@ -10,7 +10,8 @@ export function uploadProfilePicture ({ uid }: User, file: File): UploadPictureS
 
     const uploadTask = uploadBytesResumable(storageRef, file);
 
-    let response: UploadPictureSuccess | UploadPictureFail
+    let photoURL: string | undefined
+    let error: any
 
     // Register three observers:
     // 1. 'state_changed' observer, called any time the state changes
@@ -31,24 +32,29 @@ export function uploadProfilePicture ({ uid }: User, file: File): UploadPictureS
             break;
         }
     }, 
-    (error) => {
-        console.error(`[ERROR UPLOADING IMAGE]: ${error.message}`)
-        return {
-            _t : "upload_fail",
-            error,
-        }
+    (err) => {
+        console.error(`[ERROR UPLOADING IMAGE]: ${err.message}`)    
+        error = err
     }, 
     async () => {
         // Handle successful uploads on complete
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         try {
-            response._t = "upload_success"
-            response.photoURL = await getDownloadURL(uploadTask.snapshot.ref)
-        } catch (error) {
-            response.error = error
+            photoURL = await getDownloadURL(uploadTask.snapshot.ref)
+        } catch (err: any) {
+            error = err
         }
     }
     );
     
-    return response
+    if (photoURL) {
+        return {
+            _t: "upload_success",
+            photoURL,
+        }
+    }
+    return {
+        _t: "upload_fail",
+        error,
+    }
 }

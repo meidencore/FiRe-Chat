@@ -1,11 +1,13 @@
 import { FormEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { file } from '../../../../public/assets'
 import { useRegister } from '../hooks/useRegister'
+import { RegisterProps } from '../../../types/auth'
 
 export default function Register () {
 
+  const navigate = useNavigate()
   const { user, registerError, uploadImageError, registerNewUser } = useRegister()
   const onInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
     const element = event.target as HTMLInputElement
@@ -14,12 +16,11 @@ export default function Register () {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-
     // Get the elements from the Form
     const elements = event.currentTarget
     if (!user)
     {
-      const newUser = {
+      const newUser: RegisterProps = {
         username: elements.username.value,
         email: elements.email.value,
         password: elements.email.value,
