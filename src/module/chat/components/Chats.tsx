@@ -1,4 +1,4 @@
-import { profile } from "../../../../public/assets"
+import { profile } from "../../../assets"
 
 const Chats = () => {
   return (

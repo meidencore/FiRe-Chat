@@ -1,4 +1,4 @@
-import { profile } from "../../../../public/assets"
+import { profile } from "../../../assets"
 import { logout } from "../../../services/auth/auth"
 
 const Navbar = () => {

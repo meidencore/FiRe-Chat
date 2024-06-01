@@ -1,4 +1,4 @@
-import { file } from "../../../../public/assets"
+import { file } from "../../../assets"
 
 const Input = () => {
   return (

@@ -1,7 +1,7 @@
 import { FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-import { file } from '../../../../public/assets'
+import { file } from '../../../assets'
 import { useRegister } from '../hooks/useRegister'
 import { RegisterProps } from '../../../types/auth'
 
