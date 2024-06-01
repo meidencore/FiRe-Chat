@@ -1,12 +1,12 @@
 import { User } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { registerUser } from "../../../services/auth/register";
-import { UserUpdates, updateUser } from "../../../services/auth/user";
+import { createUserInDb, updateUser } from "../../../services/auth/user";
 import { uploadProfilePicture } from "../../../services/auth/image";
-import { RegisterProps, RegisterReturn } from "../../../types/auth";
+import { RegisterProps, useRegisterReturn, UserUpdates } from "../../../types/auth";
 import { FirebaseError } from "firebase/app";
 
-export function useRegister(): RegisterReturn {
+export function useRegister(): useRegisterReturn {
 
     const [user, setUser] = useState<User>()
     const [formData, setFormData] = useState<RegisterProps>()
@@ -42,13 +42,18 @@ export function useRegister(): RegisterReturn {
         }
         if (formData?.file) 
         {   
-            try {
-                updates.photoURL = uploadProfilePicture(user, formData.file)
-            } catch (error: any) {
-                setUploadImageError(error)     
+            const response = uploadProfilePicture(user, formData.file)
+            if (response._t === "upload_success")
+            {
+                updates.photoURL = response.photoURL
+            } 
+            else
+            {
+                setUploadImageError(response.error)     
             }
         }      
         updateUser(user, updates)
+        createUserInDb(user)        
     /// eslint-disable-next-line react-hooks/exhaustive-deps
     },[user, formData])
 

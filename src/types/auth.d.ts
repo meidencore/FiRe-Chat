@@ -16,16 +16,16 @@ export type RegisterFail = {
 }
 
 export type UploadPictureSuccess = {
-    _t: "upload_success"
-    photoURL: string
+    _t: "upload_success";
+    photoURL: string;
 }
 
 export type UploadPictureFail = {
-    _t: "upload_fail"
-    error: any
+    _t: "upload_fail";
+    error: any;
 }
 
-export type RegisterReturn = {
+export interface useRegisterReturn {
     user?: User
     registerError?: string
     uploadImageError?: string
@@ -35,4 +35,9 @@ export type RegisterReturn = {
 export type AuthCredentials = {
     email: string
     password: string
+}
+
+export type UserUpdates = {
+    displayName?: string,
+    photoURL?: string,
 }
