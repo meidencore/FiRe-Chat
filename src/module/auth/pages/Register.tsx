@@ -1,5 +1,5 @@
 import { FormEvent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { file } from '../../../assets'
 import { useRegister } from '../hooks/useRegister'
@@ -7,7 +7,7 @@ import { RegisterProps } from '../../../types/auth'
 
 export default function Register () {
 
-  const navigate = useNavigate()
+  //const navigate = useNavigate()
   const { user, registerError, uploadImageError, registerNewUser } = useRegister()
   const onInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
     const element = event.target as HTMLInputElement
