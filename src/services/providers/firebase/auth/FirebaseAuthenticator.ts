@@ -2,7 +2,8 @@ import { FirebaseError } from "firebase/app";
 import { IAuthenticator, RegisterResponse, LoginResponse } from "../../../auth/interfaces/IAuthenticator";
 import { RegisterData, LoginCredentials} from "../../../auth/types/Auth";
 import { auth } from "../firebase.config";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut} from "firebase/auth";
+import { UserInfo } from "../../../../types/UserInfo";
 
 export class FirebaseAuthenticator implements IAuthenticator {
     
@@ -70,5 +71,11 @@ export class FirebaseAuthenticator implements IAuthenticator {
         
         signOut(auth) 
     
+    }
+
+    public onChangeAuthenticacionStatus(callback: (user: UserInfo | null ) => void): void {
+        
+        onAuthStateChanged(auth, callback)   
+
     }
 }

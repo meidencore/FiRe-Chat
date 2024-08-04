@@ -1,12 +1,12 @@
-import { User, onAuthStateChanged } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
-import { auth } from "../services/providers/firebase/firebase.config";
+import { UserInfo } from "../types/UserInfo";
+import { addAuthenticationStatusListener } from "../services/auth/authentication";
 
 type AuthContextProviderProps = {
     children: React.ReactNode
 }
 type UserState = {
-    currentUser?: User | null
+    currentUser?: UserInfo | null
 }
 
 // the currentUser have 3 States
@@ -17,16 +17,18 @@ export const AuthContext = createContext<UserState>({})
 
 export default function AuthContextProvider({children}: AuthContextProviderProps) {
 
-    const [currentUser, setCurrentUser] = useState<User | null >()
+    const [currentUser, setCurrentUser] = useState<UserInfo | null >()
 
     useEffect(() => {
 
-        const unsub = onAuthStateChanged(auth, (user) => {
-            setCurrentUser(user);
-        })
+        const updateUser = (user: UserInfo | null) => {
+            setCurrentUser(user)
+        }
+
+        addAuthenticationStatusListener(updateUser)
 
         return () => {
-            unsub()
+            addAuthenticationStatusListener(updateUser) 
         }
     },[])
 

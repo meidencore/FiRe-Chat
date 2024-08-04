@@ -1,4 +1,5 @@
 import { NewUser } from "../../module/auth/hooks/useRegister";
+import { UserInfo } from "../../types/UserInfo";
 import { FirebaseAuthenticator } from "../providers/firebase/auth/FirebaseAuthenticator";
 import { FirebaseDatabase } from "../providers/firebase/data/FirebaseDatabase";
 import { LoginResponse, RegisterResponse } from "./interfaces/IAuthenticator";
@@ -38,4 +39,10 @@ export async function logoutRequest(): Promise<void> {
     
     authProvider.logout()
     
+}
+
+export function addAuthenticationStatusListener(callback: (user: UserInfo | null) => void): void {
+
+    authProvider.onChangeAuthenticacionStatus(callback)
+
 }
