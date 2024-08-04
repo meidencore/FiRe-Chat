@@ -1,5 +1,5 @@
 import { profile } from "../../../assets"
-import { logout } from "../../../services/auth/auth"
+import { logoutRequest } from "../../../services/auth/authentication"
 
 const Navbar = () => {
   return (
@@ -8,7 +8,7 @@ const Navbar = () => {
       <div className="flex gap-3 justify-evenly">
         <img src={profile} alt="profile" className="bg-_dimSoft h-6 w-6 rounded-full object-cover"/>
         <span className="font-normal text-base cursor-default">Meidencore</span>
-        <button onClick={logout} className="bg-_dark text-_dimSoft text-xs border-none rounded cursor-pointer p-1 ss:static ss:bg-_dimDark absolute bottom-2 left-2">Logout</button>
+        <button onClick={logoutRequest} className="bg-_dark text-_dimSoft text-xs border-none rounded cursor-pointer p-1 ss:static ss:bg-_dimDark absolute bottom-2 left-2">Logout</button>
       </div>
     </div>
   )

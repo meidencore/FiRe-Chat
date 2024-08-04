@@ -1,13 +1,11 @@
 import { FormEvent } from 'react'
-import { Link } from 'react-router-dom'
-
-import { useRegister } from '../hooks/useRegister'
-import { RegisterProps } from '../../../types/auth'
+import { Link, useNavigate } from 'react-router-dom'
+import { NewUser, useRegister } from '../hooks/useRegister'
 
 export default function Register () {
 
-  //const navigate = useNavigate()
-  const { user, registerError, registerNewUser } = useRegister()
+  const navigate = useNavigate()
+  const { registerError, registerNewUser } = useRegister()
 /*  const onInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
     const element = event.target as HTMLInputElement
     element.value = ''
@@ -17,16 +15,13 @@ export default function Register () {
     event.preventDefault()
     // Get the elements from the Form
     const elements = event.currentTarget
-    if (!user)
-    {
-      const newUser: RegisterProps = {
+    const newUser: NewUser = {
         username: elements.username.value,
         email: elements.email.value,
         password: elements.email.value,
-        file: elements.file.files[0]
-      }
-      registerNewUser(newUser)
     }
+    const registerSuccess = await registerNewUser(newUser)
+    if (registerSuccess) navigate("/login")
   }
   return (
     <div className='bg-_aumDark h-screen flex items-center justify-center'>

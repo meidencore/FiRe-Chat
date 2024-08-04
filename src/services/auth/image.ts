@@ -1,7 +1,5 @@
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { storage } from "../utils/firebase.config";
+/* import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { User } from "firebase/auth";
-import { UploadPictureSuccess, UploadPictureFail } from "../../types/auth";
 
 
 export function uploadProfilePicture ({ uid }: User, file: File): UploadPictureSuccess | UploadPictureFail {
@@ -58,3 +56,4 @@ export function uploadProfilePicture ({ uid }: User, file: File): UploadPictureS
         error,
     }
 }
+*/

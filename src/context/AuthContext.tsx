@@ -1,6 +1,6 @@
 import { User, onAuthStateChanged } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
-import { auth } from "../services/utils/firebase.config";
+import { auth } from "../services/providers/firebase/firebase.config";
 
 type AuthContextProviderProps = {
     children: React.ReactNode
