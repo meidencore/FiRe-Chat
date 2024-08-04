@@ -6,11 +6,7 @@ export default function Register () {
 
   const navigate = useNavigate()
   const { registerError, registerNewUser } = useRegister()
-/*  const onInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
-    const element = event.target as HTMLInputElement
-    element.value = ''
-  }
-*/
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     // Get the elements from the Form
@@ -18,11 +14,12 @@ export default function Register () {
     const newUser: NewUser = {
         username: elements.username.value,
         email: elements.email.value,
-        password: elements.email.value,
+        password: elements.password.value,
     }
     const registerSuccess = await registerNewUser(newUser)
-    if (registerSuccess) navigate("/login")
+    if (registerSuccess) navigate("/")
   }
+
   return (
     <div className='bg-_aumDark h-screen flex items-center justify-center'>
         <div className={`flex flex-col items-center rounded-[10px] bg-_dimSoft py-5 px-[60px] gap-[10px] ${registerError ? 'border-solid border-2 border-red-700' : null}`}>

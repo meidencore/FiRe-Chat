@@ -31,9 +31,6 @@ export interface LoginFail {
 }
 
 export interface UserUpdates {
-    readonly user: UserInfo
-    readonly updates: {
-        displayName?:string,
-        photoURL?: string
-    }
+    displayName?:string,
+    photoURL?: string
 }

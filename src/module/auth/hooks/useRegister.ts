@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { UserInfo } from "../../../types/UserInfo";
 import { registerRequest } from "../../../services/auth/authentication";
 
 export type NewUser = {
@@ -9,14 +8,12 @@ export type NewUser = {
 }
 
 export interface useRegisterReturn {
-    user?: UserInfo
     registerError?: string
     registerNewUser(newUser: NewUser): Promise<boolean>
 }
 
 export function useRegister(): useRegisterReturn {
 
-    const [user, setUser] = useState<UserInfo>()
     const [registerError, setRegisterError] = useState<string>()
 
     /// Register User
@@ -25,7 +22,6 @@ export function useRegister(): useRegisterReturn {
         const response = await registerRequest(newUser)
 
         if (response._t === "register_success") {
-            setUser(response.user)
             return true
         }
         else {
@@ -35,7 +31,6 @@ export function useRegister(): useRegisterReturn {
     }
 
     return {
-        user,
         registerError,
         registerNewUser,
     }

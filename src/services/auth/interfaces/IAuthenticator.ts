@@ -1,4 +1,4 @@
-import { LoginCredentials, LoginFail, LoginSuccess, RegisterData, RegisterFail, RegisterSuccess, UserUpdates } from "../types/Auth"
+import { LoginCredentials, LoginFail, LoginSuccess, RegisterData, RegisterFail, RegisterSuccess} from "../types/Auth"
 
 export type RegisterResponse = RegisterSuccess | RegisterFail 
 export type LoginResponse = LoginSuccess | LoginFail
@@ -9,7 +9,7 @@ export interface IAuthenticator {
     // Login an User and return if the operation was successfully
     login: (loginCredentials: LoginCredentials) => Promise<LoginResponse>
     // Update the displayName and/or the profile picture or a registered User
-    updateUser: (userUpdates: UserUpdates) => Promise<void> 
+    // updateUser: (userUpdates: UserUpdates) => Promise<void> 
     // Logout a user
     logout: () => Promise<void>
 }
