@@ -8,7 +8,7 @@ import plus from './plus.svg'
 import search from './search.svg'
 import file from './file.svg'
 import react from './react.svg'
-import profile from './profile.jpeg'
+import profile from './default_profile_picture.webp'
 
 export {
     arrowBack,
