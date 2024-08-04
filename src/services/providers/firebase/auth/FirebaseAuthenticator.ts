@@ -1,8 +1,8 @@
 import { FirebaseError } from "firebase/app";
 import { IAuthenticator, RegisterResponse, LoginResponse } from "../../../auth/interfaces/IAuthenticator";
-import { RegisterData, LoginCredentials, UserUpdates } from "../../../auth/types/Auth";
+import { RegisterData, LoginCredentials} from "../../../auth/types/Auth";
 import { auth } from "../firebase.config";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, User } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth";
 
 export class FirebaseAuthenticator implements IAuthenticator {
     
@@ -70,16 +70,5 @@ export class FirebaseAuthenticator implements IAuthenticator {
         
         signOut(auth) 
     
-    }
-
-    public async updateUser(userUpdates: UserUpdates) {
-        
-        const { user, updates } = userUpdates
-    
-        const firebaseUser = user as User
-
-        if (updates.displayName || updates.photoURL) {
-            updateProfile(firebaseUser, {...updates})
-        }
     }
 }
