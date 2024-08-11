@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { loginRequest } from "../../../services/auth/authentication";
-import { LoginCredentials } from "../../../services/auth/types/Auth";
+import { loginRequest } from "../../../services/authService/authentication";
+import { LoginCredentials } from "../../../services/types/Auth";
 
 export interface useLoginReturn {
     loginError?: string

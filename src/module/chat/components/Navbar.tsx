@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { profile } from "../../../assets"
-import { logoutRequest } from "../../../services/auth/authentication"
+import { logoutRequest } from "../../../services/authService/authentication"
 import { AuthContext } from "../../../context/AuthContext"
 
 const Navbar = () => {

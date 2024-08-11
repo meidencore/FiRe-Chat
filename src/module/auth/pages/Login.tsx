@@ -1,7 +1,7 @@
 import { FormEvent } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useLogin } from "../hooks/useLogin"
-import { LoginCredentials } from "../../../services/auth/types/Auth"
+import { LoginCredentials } from "../../../services/types/Auth"
 
 const Login = () => {
     const navigate = useNavigate()

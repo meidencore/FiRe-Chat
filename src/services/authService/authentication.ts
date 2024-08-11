@@ -1,9 +1,9 @@
 import { NewUser } from "../../module/auth/hooks/useRegister";
 import { UserInfo } from "../../types/UserInfo";
-import { FirebaseAuthenticator } from "../providers/firebase/auth/FirebaseAuthenticator";
-import { FirebaseDatabase } from "../providers/firebase/data/FirebaseDatabase";
-import { LoginResponse, RegisterResponse } from "./interfaces/IAuthenticator";
-import { LoginCredentials, RegisterData } from "./types/Auth";
+import { FirebaseAuthenticator } from "../servicesProviders/firebase/auth/FirebaseAuthenticator";
+import { FirebaseDatabase } from "../servicesProviders/firebase/data/FirebaseDatabase";
+import { LoginResponse, RegisterResponse } from "../interfaces/IAuthenticator";
+import { LoginCredentials, RegisterData } from "../types/Auth";
 
 
 const authProvider = new FirebaseAuthenticator()

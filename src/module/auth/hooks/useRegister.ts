@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { registerRequest } from "../../../services/auth/authentication";
+import { registerRequest } from "../../../services/authService/authentication";
 
 export type NewUser = {
     username: string

@@ -1,9 +1,9 @@
 import { updateProfile } from "firebase/auth";
 import { UserInfo } from "../../../../types/UserInfo";
-import { IDatabase } from "../../../auth/interfaces/IDatabase";
-import { UserUpdates } from "../../../auth/types/Auth";
+import { IDatabase } from "../../../interfaces/IDatabase";
+import { UserUpdates } from "../../../types/Auth";
 import { auth, db } from "../firebase.config";
-import { setDoc, doc, updateDoc } from "firebase/firestore";
+import { setDoc, doc,query, collection, updateDoc, where, getDocs } from "firebase/firestore";
 
 // TODO TryCatch and error handling
 
@@ -11,13 +11,16 @@ export class FirebaseDatabase implements IDatabase {
 
     public async createUserCollection(user: UserInfo): Promise<string> {
 
-        const { uid, displayName, email, photoURL } = user
+        // UserInfo is a subset of the User of Firebase, this is only to save in DB this properties
+        const { uid, photoURL, phoneNumber, providerId, displayName, email } = user
 
         await setDoc(doc(db, "users", uid), {
             uid,
+            photoURL,
+            phoneNumber,
+            providerId,
             displayName,
-            email, 
-            photoURL
+            email
         })
 
         await setDoc(doc(db, "userChats", uid), {
@@ -43,5 +46,23 @@ export class FirebaseDatabase implements IDatabase {
 
         return uid
     }
+
+    public async getUsersByName(name: string): Promise<UserInfo[] | null> {
+
+        const q = query(collection(db, "users"), where("displayName", "==", name));
+
+        const querySnapshot = await getDocs(q)
+
+        if (querySnapshot.empty) {
+            return null
+        } 
+
+        const users: UserInfo[] = []
+        querySnapshot.forEach((doc) => {
+            users.push(doc.data() as UserInfo)
+        }); 
+
+        return users
+    }       
 
 }

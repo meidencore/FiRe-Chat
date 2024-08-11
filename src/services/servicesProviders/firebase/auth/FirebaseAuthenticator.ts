@@ -1,6 +1,6 @@
 import { FirebaseError } from "firebase/app";
-import { IAuthenticator, RegisterResponse, LoginResponse } from "../../../auth/interfaces/IAuthenticator";
-import { RegisterData, LoginCredentials} from "../../../auth/types/Auth";
+import { IAuthenticator, RegisterResponse, LoginResponse } from "../../../interfaces/IAuthenticator";
+import { RegisterData, LoginCredentials} from "../../../types/Auth";
 import { auth } from "../firebase.config";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut} from "firebase/auth";
 import { UserInfo } from "../../../../types/UserInfo";

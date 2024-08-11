@@ -1,5 +1,5 @@
 import { LoginCredentials, LoginFail, LoginSuccess, RegisterData, RegisterFail, RegisterSuccess} from "../types/Auth"
-import { UserInfo } from "../../../types/UserInfo"
+import { UserInfo } from "../../types/UserInfo"
 
 export type RegisterResponse = RegisterSuccess | RegisterFail 
 export type LoginResponse = LoginSuccess | LoginFail
