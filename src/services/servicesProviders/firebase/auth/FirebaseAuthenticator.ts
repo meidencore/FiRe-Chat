@@ -1,5 +1,4 @@
-import { FirebaseError } from "firebase/app";
-import { IAuthenticator, RegisterResponse, LoginResponse } from "../../../interfaces/IAuthenticator";
+import { IAuthenticator } from "../../../interfaces/IAuthenticator";
 import { RegisterData, LoginCredentials} from "../../../types/Auth";
 import { auth } from "../firebase.config";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut} from "firebase/auth";
@@ -7,64 +6,22 @@ import { UserInfo } from "../../../../types/UserInfo";
 
 export class FirebaseAuthenticator implements IAuthenticator {
     
-    public async register(registerData: RegisterData): Promise<RegisterResponse> {
+    public async register(registerData: RegisterData): Promise<UserInfo> {
     
         const { email, password } = registerData
 
-        try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password)
-            const { user } = userCredential
-            return {
-                _t: "register_success",
-                user
-            }
-        } 
-        catch (error) {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+        return userCredential.user
             
-            if (error instanceof FirebaseError) {
-                const errorMessageFormatted = (error as FirebaseError).code.slice(5)
-
-                return {
-                    _t: "register_fail",
-                    error: errorMessageFormatted
-                }      
-            }
-
-            return {
-                _t: "register_fail",
-                error
-            }
-        }
     }
 
-    public async login(loginCredentials: LoginCredentials): Promise<LoginResponse> {
-        
+    public async login(loginCredentials: LoginCredentials): Promise<UserInfo> {
+
         const { email, password } = loginCredentials
-        
-        try {
-            const userCredentials = await signInWithEmailAndPassword(auth, email, password)
-            const { user } = userCredentials
-            return {
-                _t: "login_success",
-                user
-            }
-        }
-        catch (error) {
-            
-            if (error instanceof FirebaseError) {
-                const errorMessageFormatted = (error as FirebaseError).code.slice(5)
 
-                return {
-                    _t: "login_fail",
-                    error: errorMessageFormatted
-                }      
-            }
+        const userCredentials = await signInWithEmailAndPassword(auth, email, password)
+        return userCredentials.user
 
-            return {
-                _t: "login_fail",
-                error
-            }
-        }
     }
     
     public async logout(): Promise<void> {

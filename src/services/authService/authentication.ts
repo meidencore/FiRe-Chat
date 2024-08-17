@@ -2,9 +2,11 @@ import { NewUser } from "../../module/auth/hooks/useRegister";
 import { UserInfo } from "../../types/UserInfo";
 import { FirebaseAuthenticator } from "../servicesProviders/firebase/auth/FirebaseAuthenticator";
 import { FirebaseDatabase } from "../servicesProviders/firebase/data/FirebaseDatabase";
-import { LoginResponse, RegisterResponse } from "../interfaces/IAuthenticator";
-import { LoginCredentials, RegisterData } from "../types/Auth";
+import { LoginCredentials, RegisterData, RegisterSuccess, RegisterFail, LoginSuccess, LoginFail } from "../types/Auth";
+import { FirebaseError } from "firebase/app";
 
+export type RegisterResponse = RegisterSuccess | RegisterFail
+export type LoginResponse = LoginSuccess | LoginFail
 
 const authProvider = new FirebaseAuthenticator()
 const dataProvider = new FirebaseDatabase()
@@ -16,22 +18,60 @@ export async function registerRequest(newUser: NewUser): Promise<RegisterRespons
         email,
         password
     }
-    const response = await authProvider.register(registerData)    
+    try {
+        const user = await authProvider.register(registerData)    
 
-    if (response._t === "register_success") {
-        
-        const uid = await dataProvider.createUserCollection(response.user)
+        const uid = await dataProvider.createUserCollection(user)
 
         dataProvider.updateUserById(uid, {displayName: username})
+
+        return {
+            _t: "register_success",
+            user
+        }
+    } catch (error) {
+
+        if (error instanceof FirebaseError) {
+            const errorMessageFormatted = (error as FirebaseError).code.slice(5)
+
+            return {
+                _t: "register_fail",
+                error: errorMessageFormatted
+            }      
+        }
+
+        return {
+            _t: "register_fail",
+            error
+        }
     }
 
-    return response
 }
 
 export async function loginRequest(userCredentials: LoginCredentials): Promise<LoginResponse> {
-    
-    return await authProvider.login(userCredentials)
 
+    try {
+        const user = await authProvider.login(userCredentials)
+        return {
+            _t: "login_success",
+            user
+        }
+    } catch (error) {
+
+        if (error instanceof FirebaseError) {
+            const errorMessageFormatted = (error as FirebaseError).code.slice(5)
+
+            return {
+                _t: "login_fail",
+                error: errorMessageFormatted
+            }      
+        }
+
+        return {
+            _t: "login_fail",
+            error
+        }
+    }
 } 
 
 
