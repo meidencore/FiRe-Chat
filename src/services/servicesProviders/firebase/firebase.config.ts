@@ -19,3 +19,4 @@ export const auth = getAuth(app)
 export const db = getFirestore(app)
 export const storage = getStorage(app)
 setPersistence(auth, browserLocalPersistence)
+export const adminChatId: string = import.meta.env.VITE_ADMIN_CHAT_ID

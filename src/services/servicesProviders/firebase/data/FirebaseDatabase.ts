@@ -2,7 +2,7 @@ import { updateProfile } from "firebase/auth";
 import { UserInfo } from "../../../../types/UserInfo";
 import { IDatabase } from "../../../interfaces/IDatabase";
 import { UserUpdates } from "../../../types/Auth";
-import { auth, db } from "../firebase.config";
+import { adminChatId, auth, db } from "../firebase.config";
 import { setDoc, doc,query, collection, updateDoc, where, getDocs } from "firebase/firestore";
 
 // TODO TryCatch and error handling
@@ -22,9 +22,8 @@ export class FirebaseDatabase implements IDatabase {
             displayName,
             email
         })
-
-        await setDoc(doc(db, "userChats", uid), {
-
+        const userChatRef = collection(db, "users", uid, "chats")
+        await setDoc(doc(userChatRef, adminChatId), {
         })
 
         return uid
