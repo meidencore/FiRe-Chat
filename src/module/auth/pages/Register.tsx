@@ -1,14 +1,16 @@
-import { FormEvent } from 'react'
+import { FormEvent, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { NewUser, useRegister } from '../hooks/useRegister'
+import Loader from '../../ui/Loader'
 
 export default function Register () {
 
   const navigate = useNavigate()
   const { registerError, registerNewUser } = useRegister()
-
+  const [ disabled, setDisabled ] = useState(false)
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setDisabled(true)
     // Get the elements from the Form
     const elements = event.currentTarget
     const newUser: NewUser = {
@@ -18,6 +20,7 @@ export default function Register () {
     }
     const registerSuccess = await registerNewUser(newUser)
     if (registerSuccess) navigate("/")
+    setDisabled(false)
   }
 
   return (
@@ -29,8 +32,8 @@ export default function Register () {
                 <input name='username' className="bg-_dimSoft border-0 px-4 border-b-_dark border-b-[1px] border-solid bg-_gray focus:outline-none focus:ring-0 focus:border-b-_dark" type="text" placeholder='Display name'/>
                 <input name='email' className="bg-_dimSoft border-0 px-4 border-b-_dark border-b-[1px] border-solid bg-_gray focus:outline-none focus:ring-0 focus:border-b-_dark" type="email" placeholder='Email'/>
                 <input name='password' className="bg-_dimSoft border-0 px-4 border-b-_dark border-b-[1px] border-solid bg-_gray focus:outline-none focus:ring-0 focus:border-b-_dark" type="password" placeholder='Password'/>
-                <button className='bg-_yellow text-_aumDark px-2 py-2 font-bold border-none cursor-pointer hover:bg-yellow-500 rounded-md'>
-                    Sign Up
+                <button disabled={disabled} className={`flex place-content-center ${disabled ? "bg-yellow-500" : "bg-_yellow"} text-_aumDark px-2 py-2 font-bold border-none cursor-pointer hover:bg-yellow-500 rounded-md`}>
+                    {disabled ? <Loader /> : "Sign In"}
                 </button>
 
                 { registerError ? // error not null, show error

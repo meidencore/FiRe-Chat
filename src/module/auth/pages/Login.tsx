@@ -1,14 +1,17 @@
-import { FormEvent } from "react"
+import { FormEvent, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useLogin } from "../hooks/useLogin"
 import { LoginCredentials } from "../../../services/types/Auth"
+import Loader from "../../ui/Loader"
 
 const Login = () => {
     const navigate = useNavigate()
     const { loginError, loginUser } = useLogin()
+    const [ disabled , setDisabled ] = useState(false)
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
+        setDisabled(true)
         // Get the elements from the Form
         const elements = event.currentTarget
         const userCredentials: LoginCredentials = {
@@ -17,6 +20,7 @@ const Login = () => {
         }
         const loginSuccess = await loginUser(userCredentials)
         if (loginSuccess) navigate("/")
+        setDisabled(false)
     }
 
   return (
@@ -27,13 +31,13 @@ const Login = () => {
             <form className='flex flex-col gap-[15px]' onSubmit={handleSubmit}>
                 <input name='email' className="bg-_dimSoft border-0 px-4 border-b-_dark border-b-[1px] border-solid bg-_gray focus:outline-none focus:ring-0 focus:border-b-_dark" type="email" placeholder='Email'/>
                 <input name='password' className="bg-_dimSoft border-0 px-4 border-b-_dark border-b-[1px] border-solid bg-_gray focus:outline-none focus:ring-0 focus:border-b-_dark" type="password" placeholder='Password'/>
-                <button className='bg-_yellow text-_aumDark px-2 py-2 font-bold border-none cursor-pointer hover:bg-yellow-500 rounded-md'>
-                    Sign In
+                <button disabled={disabled} className={`flex place-content-center ${disabled ? "bg-yellow-500" : "bg-_yellow"} text-_aumDark px-2 py-2 font-bold border-none cursor-pointer hover:bg-yellow-500 rounded-md`}>
+                    {disabled ? <Loader /> : "Sign In"}
                 </button>
 
                 { loginError ? // error not null, show error
                 <div className='max-h-2 h2'>
-                { true &&<span className='text-red-700 text-sm text-center'>{loginError}</span>}
+                    <span className='text-red-700 text-sm text-center'>{loginError}</span>
                 </div>
                 :
                 <span className='max-h-2 h-2'></span>
